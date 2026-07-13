@@ -1,53 +1,92 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import OwlCarousel from 'react-owl-carousel';
-import 'owl.carousel/dist/assets/owl.carousel.css';
-import 'owl.carousel/dist/assets/owl.theme.default.css';
+import { CollectionContext } from "../context/CollectionContext";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import "../../css/styles/skeleton.css";
 
 const HotCollections = () => {
-  //set the variables
-    const [collection, setCollection] = useState([]);
-    const [error, setError] = useState(null);
+    //set the variables
+    const { collection, loading, error, setSelectedId } =
+        useContext(CollectionContext);
 
-    const CarouselComponent = () => {
-  // Owl Carousel settings
-  const options = {
-    items: 3,          // Show 4 images at a time
-    slideBy: 1,        // Scroll 1 image per click
-    loop: true,        // Infinite loop
-    margin: 1,        // Space between items
-    nav: true,         // Show left/right arrows
-    dots: true,       // Show dots
-    autoplay: false,   // Disable auto-play
-    smartSpeed: 600,   // Smooth transition speed
-    responsive: {      // Responsive breakpoints
-      0: { items: 1 },
-      600: { items: 2 },
-      1000: { items: 4 }
+    if (error) return <p>Error: {error}</p>;
+
+    // Custom Previous Arrow Component
+    function PrevArrow(props) {
+        const { className, style, onClick } = props;
+        return (
+            <div
+                className={className}
+                style={{
+                    ...style,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "#333",
+                    borderRadius: "50%",
+                    padding: "10px",
+                    zIndex: 2,
+                    left: "0px", // move arrow to border
+                }}
+                onClick={onClick}
+            >
+                <FaArrowLeft color="#fff" />
+            </div>
+        );
     }
-  };
-}
 
+    // Custom Next Arrow Component
+    function NextArrow(props) {
+        const { className, style, onClick } = props;
+        return (
+            <div
+                className={className}
+                style={{
+                    ...style,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    background: "#333",
+                    borderRadius: "50%",
+                    padding: "10px",
+                    zIndex: 2,
+                    right: "0px", // move arrow to border
+                }}
+                onClick={onClick}
+            >
+                <FaArrowRight color="#fff" />
+            </div>
+        );
+    }
 
-    useEffect(() => {
-        const fetchData = async () => {
-          //fetch the API
-            try {
-                const response = await axios.get(
-                    "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections",
-                );
-                //Parse the json format
-                setCollection(response.data);
-            } catch (error) {
-              //handle any error
-                setError(error.message);
-            } 
-        };
-
-        fetchData();
-    }, []);
-
+    // Slider settings
+    const settings = {
+        dots: true, // Show navigation dots
+        infinite: true, // Infinite loop
+        speed: 500, // Transition speed in ms
+        slidesToShow: 4, // Number of slides visible
+        slidesToScroll: 1, // Number of slides to scroll at once
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        responsive: [
+            // Responsive breakpoints
+            {
+                breakpoint: 1024,
+                settings: { slidesToShow: 3 },
+            },
+            {
+                breakpoint: 840,
+                settings: { slidesToShow: 2 },
+            },
+            {
+                breakpoint: 540,
+                settings: { slidesToShow: 1 },
+            },
+        ],
+    };
 
     return (
         <section id="section-collections" className="no-bottom">
@@ -59,43 +98,64 @@ const HotCollections = () => {
                             <div className="small-border bg-color-2"></div>
                         </div>
                     </div>
-                    <OwlCarousel items={4} loop nav  className="owl-theme" >               
-                    {collection.map((item) => (
-                    <div
-                        className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                        key={item.id}
-                    >
-                        <div className="nft_coll">
-                            <div className="nft_wrap">
-                                <Link to="/item-details">
-                                    <img
-                                        src={item.nftImage}
-                                        className="lazy img-fluid"
-                                        alt=""
-                                    />
-                                </Link>
-                            </div>
-                            <div className="nft_coll_pp">
-                                <Link to="/author">
-                                    <img
-                                        className="lazy pp-coll"
-                                        src={item.authorImage}
-                                        alt=""
-                                    />
-                                </Link>
-                                <i className="fa fa-check"></i>
-                            </div>
-                            <div className="nft_coll_info">
-                                <Link to="/explore">
-                                    <h4>{item.title}</h4>
-                                </Link>
-                                <span>ERC-{item.code}</span>
-                            </div>
-                        </div>
-                    </div>
-                    ))}
-                    </OwlCarousel>
-                    </div>
+
+                    {loading ? (
+                        <Slider {...settings}>
+                            {Array.from({ length: 4 }).map((_, idx) => (
+                                <div key={idx} className="skeleton skeleton-img nft_wrap">
+                                    Collecting the data
+                                </div>
+                            ))}
+                        </Slider>
+                    ) : (
+                        <Slider {...settings}>
+                            {collection.map((item) => (
+                                <div key={item.nftId}>
+                                    <div
+                                    // className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
+                                    >
+                                        <div className="nft_coll">
+                                            <div className="nft_wrap">
+                                                <Link
+                                                    to={`/item-details/${item.nftId}`}
+                                                >
+                                                    <img
+                                                        src={item.nftImage}
+                                                        className="lazy img-fluid"
+                                                        alt=""
+                                                        onClick={() =>
+                                                            setSelectedId(
+                                                                item.nftId,
+                                                            )
+                                                        }
+                                                    />
+                                                </Link>
+                                            </div>
+                                            <div className="nft_coll_pp">
+                                                <Link
+                                                    to={`/author/${item.authorId}`}
+                                                >
+                                                    <img
+                                                        className="lazy pp-coll"
+                                                        src={item.authorImage}
+                                                        alt=""
+                                                    />
+                                                </Link>
+                                                <i className="fa fa-check"></i>
+                                            </div>
+                                            <div className="nft_coll_info">
+                                                <Link to="/explore">
+                                                    <h4>{item.title}</h4>
+                                                </Link>
+                                                <span>ERC-{item.code}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </Slider>
+                    )}
+                </div>
             </div>
         </section>
     );
