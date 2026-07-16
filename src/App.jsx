@@ -5,23 +5,23 @@ import Author from "./pages/Author";
 import ItemDetails from "./pages/ItemDetails";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
-import { CollectionProvider } from "./components/context/CollectionContext";
+import { DataProvider } from "./components/context/DataContext";
 
 function App() {
-  return (
-    <CollectionProvider>
-    <Router>
-      <Nav />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/author/:id" element={<Author />} />
-        <Route path="/item-details/:id" element={<ItemDetails />} />
-      </Routes>
-      <Footer />
-    </Router>
-    </CollectionProvider>
-  );
+    return (
+        <DataProvider>
+            <Router>
+                <Nav />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/explore" element={<Explore />} />
+                    <Route path="/author/:id" element={<Author />} />
+                    <Route path="/item-details/:id" element={<ItemDetails />} />
+                </Routes>
+                <Footer />
+            </Router>
+        </DataProvider>
+    );
 }
 
 export default App;

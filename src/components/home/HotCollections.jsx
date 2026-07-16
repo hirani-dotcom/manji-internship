@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { CollectionContext } from "../context/CollectionContext";
+import { DataContext } from "../context/DataContext";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -9,10 +9,8 @@ import "../../css/styles/skeleton.css";
 
 const HotCollections = () => {
     //set the variables
-    const { collection, loading, error, setSelectedId } =
-        useContext(CollectionContext);
-
-    if (error) return <p>Error: {error}</p>;
+    const { hotCollections, setSelectedItemId, loading } =
+        useContext(DataContext);
 
     // Custom Previous Arrow Component
     function PrevArrow(props) {
@@ -102,15 +100,18 @@ const HotCollections = () => {
                     {loading ? (
                         <Slider {...settings}>
                             {Array.from({ length: 4 }).map((_, idx) => (
-                                <div key={idx} className="skeleton skeleton-img nft_wrap">
+                                <div
+                                    key={idx}
+                                    className="skeleton skeleton-img nft_wrap"
+                                >
                                     Collecting the data
                                 </div>
                             ))}
                         </Slider>
                     ) : (
                         <Slider {...settings}>
-                            {collection.map((item) => (
-                                <div key={item.nftId}>
+                            {hotCollections.map((item) => (
+                                <div key={item.id}>
                                     <div
                                     // className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
                                     >
@@ -124,7 +125,7 @@ const HotCollections = () => {
                                                         className="lazy img-fluid"
                                                         alt=""
                                                         onClick={() =>
-                                                            setSelectedId(
+                                                            setSelectedItemId(
                                                                 item.nftId,
                                                             )
                                                         }
