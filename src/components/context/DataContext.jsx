@@ -6,6 +6,7 @@ export const DataContext = createContext();
 export const DataProvider = ({ children }) => {
     const [hotCollections, setHotCollections] = useState([]);
     const [newItems, setNewItems] = useState([]);
+    const [topSellers, setTopSellers] = useState([]);
     const [selectedItemId, setSelectedItemId] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -14,16 +15,20 @@ export const DataProvider = ({ children }) => {
             try {
                 setLoading(true);
                 await new Promise((resolve) => setTimeout(resolve, 3000));
-                const [hotRes, newRes] = await Promise.all([
+                const [hotRes, newRes, topRes] = await Promise.all([
                     axios.get(
                         "https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections",
                     ),
                     axios.get(
                         "https://us-central1-nft-cloud-functions.cloudfunctions.net/newItems",
                     ),
+                    axios.get(
+                        "https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers",
+                    ),
                 ]);
                 setHotCollections(hotRes.data);
                 setNewItems(newRes.data);
+                setTopSellers(topRes.data);
             } catch (err) {
             } finally {
                 setLoading(false);
@@ -38,6 +43,7 @@ export const DataProvider = ({ children }) => {
             value={{
                 hotCollections,
                 newItems,
+                topSellers,
                 selectedItemId,
                 setSelectedItemId,
                 loading,
