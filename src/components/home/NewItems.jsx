@@ -132,26 +132,15 @@ const NewItems = () => {
                                                     <i className="fa fa-check"></i>
                                                 </Link>
                                             </div>
-                                            {item.expiryDate ? (
-                                                <>
-                                                    <div className="de_countdown">
-                                                        <TimeLeft
-                                                            expiryDate={
-                                                                item.expiryDate
-                                                            }
-                                                            onFormatted={(
-                                                                timeString,
-                                                            ) =>
-                                                                setFormattedTime(
-                                                                    timeString,
-                                                                )
-                                                            }
-                                                        />
-                                                        {formattedTime}
-                                                    </div>
-                                                </>
-                                            ) : null}
-                                            ;
+                                            {item.expiryDate && (
+                                            <div className="de_countdown">
+                                                <TimeLeft
+                                                    expiryDate={item.expiryDate}
+                                                    onFormatted={(timeString) =>
+                                                        setFormattedTime(timeString)}
+                                                />
+                                                {formattedTime}
+                                            </div>)};
                                             <div className="nft__item_wrap">
                                                 <div className="nft__item_extra">
                                                     <div className="nft__item_buttons">
