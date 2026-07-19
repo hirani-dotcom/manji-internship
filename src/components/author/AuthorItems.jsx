@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DataContext } from "../../components/context/DataContext";
-import "../../css/styles/skeleton.css";
 
 const AuthorItems = () => {
-    const { author, setSelectedItemId, error } = useContext(DataContext);
+    const { author, setSelectedItem, error } = useContext(DataContext);
 
     if (error) return <p style={{ color: "red" }}>{error}</p>;
     if (!author) return <p>Waiting for author information.</p>;
@@ -61,7 +60,7 @@ const AuthorItems = () => {
                                             className="lazy nft__item_preview"
                                             alt=""
                                             onClick={() =>
-                                                setSelectedItemId(item.nftId)
+                                                setSelectedItem(item.nftId)
                                             }
                                         />
                                     </Link>
@@ -70,7 +69,7 @@ const AuthorItems = () => {
                                     <Link to={`/item-details/${item.nftId}`}>
                                         <h4
                                             onClick={() =>
-                                                setSelectedItemId(item.nftId)
+                                                setSelectedItem(item.nftId)
                                             }
                                         >
                                             {item.title}

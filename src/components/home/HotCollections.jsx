@@ -9,8 +9,8 @@ import "../../css/styles/skeleton.css";
 
 const HotCollections = () => {
     //set the variables
-    const { hotCollections, setSelectedItemId, setSelectedAuthor, loading } = useContext(DataContext);
-    
+    const { hotCollections, setSelectedItem, setSelectedAuthor, loading } =
+        useContext(DataContext);
 
     // Custom Previous Arrow Component
     function PrevArrow(props) {
@@ -25,7 +25,7 @@ const HotCollections = () => {
                     justifyContent: "center",
                     background: "#333",
                     borderRadius: "50%",
-                    padding: "10px",
+                    padding: "15px",
                     zIndex: 2,
                     left: "0px", // move arrow to border
                 }}
@@ -49,7 +49,7 @@ const HotCollections = () => {
                     justifyContent: "center",
                     background: "#333",
                     borderRadius: "50%",
-                    padding: "10px",
+                    padding: "15px",
                     zIndex: 2,
                     right: "0px", // move arrow to border
                 }}
@@ -112,45 +112,45 @@ const HotCollections = () => {
                         <Slider {...settings}>
                             {hotCollections.map((item) => (
                                 <div key={item.id}>
-                                    <div
-                                    // className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                                    >
-                                        <div className="nft_coll">
-                                            <div className="nft_wrap">
-                                                <Link
-                                                    to={`/item-details/${item.nftId}`}
-                                                >
-                                                    <img
-                                                        src={item.nftImage}
-                                                        className="lazy img-fluid"
-                                                        alt=""
-                                                        onClick={() =>
-                                                            setSelectedItemId(
-                                                                item.nftId,
-                                                            )
-                                                        }
-                                                    />
-                                                </Link>
-                                            </div>
-                                            <div className="nft_coll_pp">
-                                                <Link
-                                                    to={`/author/${item.authorId}`}
-                                                >
-                                                    <img
-                                                        className="lazy pp-coll"
-                                                        src={item.authorImage}
-                                                        alt=""
-                                                        onClick={ () => {setSelectedAuthor(item.authorId)}}
-                                                    />
-                                                </Link>
-                                                <i className="fa fa-check"></i>
-                                            </div>
-                                            <div className="nft_coll_info">
-                                                <Link to="/explore">
-                                                    <h4>{item.title}</h4>
-                                                </Link>
-                                                <span>ERC-{item.code}</span>
-                                            </div>
+                                    <div className="nft_coll">
+                                        <div className="nft_wrap">
+                                            <Link
+                                                to={`/item-details/${item.nftId}`}
+                                            >
+                                                <img
+                                                    src={item.nftImage}
+                                                    className="lazy img-fluid"
+                                                    alt=""
+                                                    onClick={() =>
+                                                        setSelectedItem(
+                                                            item.nftId,
+                                                        )
+                                                    }
+                                                />
+                                            </Link>
+                                        </div>
+                                        <div className="nft_coll_pp">
+                                            <Link
+                                                to={`/author/${item.authorId}`}
+                                            >
+                                                <img
+                                                    className="lazy pp-coll"
+                                                    src={item.authorImage}
+                                                    alt=""
+                                                    onClick={() => {
+                                                        setSelectedAuthor(
+                                                            item.authorId,
+                                                        );
+                                                    }}
+                                                />
+                                            </Link>
+                                            <i className="fa fa-check"></i>
+                                        </div>
+                                        <div className="nft_coll_info">
+                                            <Link to="/explore">
+                                                <h4>{item.title}</h4>
+                                            </Link>
+                                            <span>ERC-{item.code}</span>
                                         </div>
                                     </div>
                                 </div>

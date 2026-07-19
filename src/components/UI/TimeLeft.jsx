@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 const TimeLeft = ({ expiryDate, onFormatted }) => {
     useEffect(() => {
@@ -30,7 +30,7 @@ const TimeLeft = ({ expiryDate, onFormatted }) => {
 
             // Format with leading zeros
             const formatted = [
-                hours.toString().padStart(2, "0") + "h",
+                hours.toString() + "h",
                 minutes.toString().padStart(2, "0") + "m",
                 seconds.toString().padStart(2, "0") + "s",
             ].join(" : ");
