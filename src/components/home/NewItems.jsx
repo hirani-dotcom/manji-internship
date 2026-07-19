@@ -10,11 +10,12 @@ import TimeLeft from "../UI/TimeLeft";
 
 const NewItems = () => {
     //set the variables
-    const { newItems, setSelectedItemId, setSelectedAuthor, loading } = useContext(DataContext);
+    const { newItems, setSelectedItem, setSelectedAuthor, loading } =
+        useContext(DataContext);
 
     const [formattedTime, setFormattedTime] = useState("");
 
-  // Custom Previous Arrow
+    // Custom Previous Arrow
     function PrevArrow(props) {
         const { className, style, onClick } = props;
         return (
@@ -27,9 +28,9 @@ const NewItems = () => {
                     justifyContent: "center",
                     background: "#333",
                     borderRadius: "50%",
-                    padding: "10px",
+                    padding: "15px",
                     zIndex: 2,
-                    left: "25px", // move arrow to border
+                    left: "1px", // move arrow to border
                 }}
                 onClick={onClick}
             >
@@ -51,9 +52,9 @@ const NewItems = () => {
                     justifyContent: "center",
                     background: "#333",
                     borderRadius: "50%",
-                    padding: "10px",
+                    padding: "15px",
                     zIndex: 2,
-                    right: "25px", // move arrow to border
+                    right: "1px", // move arrow to border
                 }}
                 onClick={onClick}
             >
@@ -113,92 +114,103 @@ const NewItems = () => {
                         <Slider {...settings}>
                             {newItems.map((item) => (
                                 <div key={item.id}>
-                                    <div
-                                    // className="col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                                    >
-                                        <div className="nft__item">
-                                            <div className="author_list_pp">
-                                                <Link
-                                                    to={`/author/${item.authorId}`}
-                                                    data-bs-toggle="tooltip"
-                                                    data-bs-placement="top"
-                                                    title={item.authorName}
-                                                >
-                                                    <img
-                                                        className="lazy"
-                                                        src={item.authorImage}
-                                                        alt="" onClick={() => {setSelectedAuthor(item.authorId)}}
-                                                    />
-                                                    <i className="fa fa-check"></i>
-                                                </Link>
-                                            </div>
-                                            {item.expiryDate && (
+                                    <div className="nft__item">
+                                        <div className="author_list_pp">
+                                            <Link
+                                                to={`/author/${item.authorId}`}
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="top"
+                                                title={item.authorName}
+                                            >
+                                                <img
+                                                    className="lazy"
+                                                    src={item.authorImage}
+                                                    alt=""
+                                                    onClick={() => {
+                                                        setSelectedAuthor(
+                                                            item.authorId,
+                                                        );
+                                                    }}
+                                                />
+                                                <i className="fa fa-check"></i>
+                                            </Link>
+                                        </div>
+                                        {item.expiryDate && (
                                             <div className="de_countdown">
                                                 <TimeLeft
                                                     expiryDate={item.expiryDate}
                                                     onFormatted={(timeString) =>
-                                                        setFormattedTime(timeString)}
+                                                        setFormattedTime(
+                                                            timeString,
+                                                        )
+                                                    }
                                                 />
                                                 {formattedTime}
-                                            </div>)};
-                                            <div className="nft__item_wrap">
-                                                <div className="nft__item_extra">
-                                                    <div className="nft__item_buttons">
-                                                        <button>Buy Now</button>
-                                                        <div className="nft__item_share">
-                                                            <h4>Share</h4>
-                                                            <a
-                                                                href="#top"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                            >
-                                                                <i className="fa fa-facebook fa-lg"></i>
-                                                            </a>
-                                                            <a
-                                                                href="#top"
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                            >
-                                                                <i className="fa fa-twitter fa-lg"></i>
-                                                            </a>
-                                                            <a href="#top">
-                                                                <i className="fa fa-envelope fa-lg"></i>
-                                                            </a>
-                                                        </div>
+                                            </div>
+                                        )}
+                                        ;
+                                        <div className="nft__item_wrap">
+                                            <div className="nft__item_extra">
+                                                <div className="nft__item_buttons">
+                                                    <button>Buy Now</button>
+                                                    <div className="nft__item_share">
+                                                        <h4>Share</h4>
+                                                        <a
+                                                            href="#top"
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                        >
+                                                            <i className="fa fa-facebook fa-lg"></i>
+                                                        </a>
+                                                        <a
+                                                            href="#top"
+                                                            target="_blank"
+                                                            rel="noreferrer"
+                                                        >
+                                                            <i className="fa fa-twitter fa-lg"></i>
+                                                        </a>
+                                                        <a href="#top">
+                                                            <i className="fa fa-envelope fa-lg"></i>
+                                                        </a>
                                                     </div>
                                                 </div>
-
-                                                <Link
-                                                    to={`/item-details/${item.nftId}`}
-                                                >
-                                                    <img
-                                                        src={item.nftImage}
-                                                        className="lazy nft__item_preview"
-                                                        alt=""
-                                                        onClick={() =>
-                                                            setSelectedItemId(
-                                                                item.nftId,
-                                                            )
-                                                        }
-                                                    />
-                                                </Link>
                                             </div>
-                                            <div className="nft__item_info">
-                                                <Link to={`/item-details/${item.nftId}`}>
-                                                    <h4 
-                                                        onClick={() =>
-                                                            setSelectedItemId(
-                                                                item.nftId,
-                                                            )
-                                                        }>{item.title}</h4>
-                                                </Link>
-                                                <div className="nft__item_price">
-                                                    {item.price} ETH
-                                                </div>
-                                                <div className="nft__item_like">
-                                                    <i className="fa fa-heart"></i>
-                                                    <span>{item.likes}</span>
-                                                </div>
+
+                                            <Link
+                                                to={`/item-details/${item.nftId}`}
+                                            >
+                                                <img
+                                                    src={item.nftImage}
+                                                    className="lazy nft__item_preview"
+                                                    alt=""
+                                                    onClick={() =>
+                                                        setSelectedItem(
+                                                            item.nftId,
+                                                        )
+                                                    }
+                                                />
+                                            </Link>
+                                        </div>
+                                        <div className="nft__item_info">
+                                            <Link
+                                                to={`/item-details/${item.nftId}`}
+                                            >
+                                                <h4
+                                                    onClick={() =>
+                                                        setSelectedItem(
+                                                            item.nftId,
+                                                        )
+                                                    }
+                                                >
+                                                    {item.title}
+                                                </h4>
+                                            </Link>
+                                            <div className="nft__item_price">
+                                                {item.price} ETH
+                                            </div>
+                                            <div className="nft__item_like">
+                                                <i className="fa fa-heart"></i>
+                                                <span>{item.likes}</span>
                                             </div>
                                         </div>
                                     </div>

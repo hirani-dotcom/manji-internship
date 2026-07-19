@@ -6,7 +6,8 @@ import TimeLeft from "../UI/TimeLeft";
 const ExploreItems = () => {
     const {
         explore,
-        setSelectedItemId,
+        selectedItem,
+        setSelectedItem,
         setSelectedAuthor,
         loading,
         setSortOption,
@@ -107,9 +108,9 @@ const ExploreItems = () => {
                                           className="lazy"
                                           src={item.authorImage}
                                           alt=""
-                                          onClick={setSelectedAuthor(
-                                              `${item.authorId}`,
-                                          )}
+                                          onClick={() =>
+                                              setSelectedAuthor(item.authorId)
+                                          }
                                       />
                                       <i className="fa fa-check"></i>
                                   </Link>
@@ -151,14 +152,14 @@ const ExploreItems = () => {
                                           </div>
                                       </div>
                                   </div>
-                                  <Link to={`/item-details/${item.nftId}`}>
+                                  <Link to={`/item-details/${selectedItem}`}>
                                       <img
                                           src={item.nftImage}
                                           className="lazy nft__item_preview"
                                           alt=""
-                                          onClick={setSelectedItemId(
-                                              item.nftId,
-                                          )}
+                                          onClick={() => {
+                                              setSelectedItem(item.nftId);
+                                          }}
                                       />
                                   </Link>
                               </div>

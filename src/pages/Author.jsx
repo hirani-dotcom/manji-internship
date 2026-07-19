@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link } from "react-router-dom";
 import { DataContext } from "../components/context/DataContext";
 import Skeleton from "../components/UI/Skeleton";
 
@@ -92,11 +91,11 @@ const Author = () => {
                                 </div>
                             </div>
                             <div className="col-md-12">
-                                <Skeleton loading={loading}>
-                                    <div className="de_tab tab_simple">
+                                <div className="de_tab tab_simple">
+                                    <Skeleton loading={loading}>
                                         <AuthorItems />
-                                    </div>
-                                </Skeleton>
+                                    </Skeleton>
+                                </div>
                             </div>
                         </div>
                     </div>
