@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DataContext } from "../context/DataContext";
 import Slider from "react-slick";
@@ -9,8 +9,8 @@ import "../../css/styles/skeleton.css";
 
 const HotCollections = () => {
     //set the variables
-    const { hotCollections, setSelectedItemId, loading } =
-        useContext(DataContext);
+    const { hotCollections, setSelectedItemId, setSelectedAuthor, loading } = useContext(DataContext);
+    
 
     // Custom Previous Arrow Component
     function PrevArrow(props) {
@@ -140,6 +140,7 @@ const HotCollections = () => {
                                                         className="lazy pp-coll"
                                                         src={item.authorImage}
                                                         alt=""
+                                                        onClick={ () => {setSelectedAuthor(item.authorId)}}
                                                     />
                                                 </Link>
                                                 <i className="fa fa-check"></i>

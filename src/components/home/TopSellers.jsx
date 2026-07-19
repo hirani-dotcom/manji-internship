@@ -6,7 +6,7 @@ import "../../css/styles/skeleton.css";
 const TopSellers = () => {
 
     //set the variables
-    const { topSellers, setSelectedItemId, loading } =
+    const { topSellers, setSelectedAuthor, loading } =
         useContext(DataContext);
 
   return (
@@ -47,7 +47,7 @@ const TopSellers = () => {
                         src={item.authorImage}
                         alt=""
                         onClick={() =>
-                            setSelectedItemId(
+                            setSelectedAuthor(
                                 item.authorId,
                             )
                         }
@@ -56,7 +56,7 @@ const TopSellers = () => {
                     </Link>
                   </div>
                   <div className="author_list_info" onClick={() =>
-                            setSelectedItemId(
+                            setSelectedAuthor(
                                 item.authorId,
                             )
                         }>

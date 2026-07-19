@@ -2,15 +2,20 @@ import React, { useEffect, useContext } from "react";
 import EthImage from "../images/ethereum.svg";
 import { Link } from "react-router-dom";
 import { DataContext } from "../components/context/DataContext";
-import "../css/styles/skeleton.css";
+import Skeleton from "../components/UI/Skeleton";
 
 const ItemDetails = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    const { selectedItemId, hotCollections, newItems } =
-        useContext(DataContext);
+    const {
+        selectedItemId,
+        hotCollections,
+        newItems,
+        setSelectedAuthor,
+        loading,
+    } = useContext(DataContext);
 
     if (!selectedItemId) return <p>Please select an item to see details.</p>;
 
@@ -28,16 +33,19 @@ const ItemDetails = () => {
                     <div className="container">
                         <div className="row">
                             <div className="col-md-6 text-center">
-                                <img
-                                    src={item.nftImage}
-                                    className="img-fluid img-rounded mb-sm-30 nft-image"
-                                    alt=""
-                                />
+                                <Skeleton loading={loading}>
+                                    <img
+                                        src={item.nftImage}
+                                        className="img-fluid img-rounded mb-sm-30 nft-image"
+                                        alt=""
+                                    />
+                                </Skeleton>
                             </div>
                             <div className="col-md-6">
                                 <div className="item_info">
-                                    <h2>{item.title}</h2>
-
+                                    <Skeleton loading={loading}>
+                                        <h2>{item.title}</h2>
+                                    </Skeleton>
                                     <div className="item_info_counts">
                                         <div className="item_info_views">
                                             <i className="fa fa-eye"></i>
@@ -68,17 +76,24 @@ const ItemDetails = () => {
                                                                 item.authorImage
                                                             }
                                                             alt=""
+                                                            onClick={() => {
+                                                                setSelectedAuthor(
+                                                                    item.authorId,
+                                                                );
+                                                            }}
                                                         />
                                                         <i className="fa fa-check"></i>
                                                     </Link>
                                                 </div>
-                                                <div className="author_list_info">
-                                                    <Link
-                                                        to={`/author/${item.authorId}`}
-                                                    >
-                                                        Monica Lucas
-                                                    </Link>
-                                                </div>
+                                                <Skeleton loading={loading}>
+                                                    <div className="author_list_info">
+                                                        <Link
+                                                            to={`/author/${item.authorId}`}
+                                                        >
+                                                            Monica Lucas
+                                                        </Link>
+                                                    </div>
+                                                </Skeleton>
                                             </div>
                                         </div>
                                         <div></div>
@@ -97,17 +112,25 @@ const ItemDetails = () => {
                                                                 item.authorImage
                                                             }
                                                             alt=""
+                                                            onClick={() => {
+                                                                setSelectedAuthor(
+                                                                    item.authorId,
+                                                                );
+                                                            }}
                                                         />
                                                         <i className="fa fa-check"></i>
                                                     </Link>
                                                 </div>
-                                                <div className="author_list_info">
-                                                    <Link
-                                                        to={`/author/${item.authorId}`}
-                                                    >
-                                                        Monica Lucas
-                                                    </Link>
-                                                </div>
+
+                                                <Skeleton loading={loading}>
+                                                    <div className="author_list_info">
+                                                        <Link
+                                                            to={`/author/${item.authorId}`}
+                                                        >
+                                                            Monica Lucas
+                                                        </Link>
+                                                    </div>
+                                                </Skeleton>
                                             </div>
                                         </div>
                                         <div className="spacer-40"></div>

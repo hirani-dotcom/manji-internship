@@ -10,11 +10,11 @@ import TimeLeft from "../UI/TimeLeft";
 
 const NewItems = () => {
     //set the variables
-    const { newItems, setSelectedItemId, loading } = useContext(DataContext);
+    const { newItems, setSelectedItemId, setSelectedAuthor, loading } = useContext(DataContext);
 
     const [formattedTime, setFormattedTime] = useState("");
 
-    // Custom Previous Arrow Component
+  // Custom Previous Arrow
     function PrevArrow(props) {
         const { className, style, onClick } = props;
         return (
@@ -119,15 +119,15 @@ const NewItems = () => {
                                         <div className="nft__item">
                                             <div className="author_list_pp">
                                                 <Link
-                                                    to={`/author/${item.nftId}`}
+                                                    to={`/author/${item.authorId}`}
                                                     data-bs-toggle="tooltip"
                                                     data-bs-placement="top"
-                                                    title={item.title}
+                                                    title={item.authorName}
                                                 >
                                                     <img
                                                         className="lazy"
                                                         src={item.authorImage}
-                                                        alt=""
+                                                        alt="" onClick={() => {setSelectedAuthor(item.authorId)}}
                                                     />
                                                     <i className="fa fa-check"></i>
                                                 </Link>
@@ -148,20 +148,20 @@ const NewItems = () => {
                                                         <div className="nft__item_share">
                                                             <h4>Share</h4>
                                                             <a
-                                                                href=""
+                                                                href="#top"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                             >
                                                                 <i className="fa fa-facebook fa-lg"></i>
                                                             </a>
                                                             <a
-                                                                href=""
+                                                                href="#top"
                                                                 target="_blank"
                                                                 rel="noreferrer"
                                                             >
                                                                 <i className="fa fa-twitter fa-lg"></i>
                                                             </a>
-                                                            <a href="">
+                                                            <a href="#top">
                                                                 <i className="fa fa-envelope fa-lg"></i>
                                                             </a>
                                                         </div>
@@ -184,8 +184,13 @@ const NewItems = () => {
                                                 </Link>
                                             </div>
                                             <div className="nft__item_info">
-                                                <Link to="/item-details">
-                                                    <h4>{item.title}</h4>
+                                                <Link to={`/item-details/${item.nftId}`}>
+                                                    <h4 
+                                                        onClick={() =>
+                                                            setSelectedItemId(
+                                                                item.nftId,
+                                                            )
+                                                        }>{item.title}</h4>
                                                 </Link>
                                                 <div className="nft__item_price">
                                                     {item.price} ETH

@@ -4,8 +4,13 @@ import { DataContext } from "../context/DataContext";
 import TimeLeft from "../UI/TimeLeft";
 
 const ExploreItems = () => {
-    const { explore, setSelectedItemId, loading, setSortOption } =
-        useContext(DataContext);
+    const {
+        explore,
+        setSelectedItemId,
+        setSelectedAuthor,
+        loading,
+        setSortOption,
+    } = useContext(DataContext);
 
     const [formattedTime, setFormattedTime] = useState("");
 
@@ -18,8 +23,6 @@ const ExploreItems = () => {
     const handleChange = (event) => {
         setSortOption(event.target.value);
     };
-
-    // console.log('setSortOption:', setSortOption);
 
     return (
         <>
@@ -60,20 +63,20 @@ const ExploreItems = () => {
                                               <div className="nft__item_share">
                                                   <h4>Share</h4>
                                                   <a
-                                                      href=""
+                                                      href="#top"
                                                       target="_blank"
                                                       rel="noreferrer"
                                                   >
                                                       <i className="fa fa-facebook fa-lg"></i>
                                                   </a>
                                                   <a
-                                                      href=""
+                                                      href="#top"
                                                       target="_blank"
                                                       rel="noreferrer"
                                                   >
                                                       <i className="fa fa-twitter fa-lg"></i>
                                                   </a>
-                                                  <a href="">
+                                                  <a href="#top">
                                                       <i className="fa fa-envelope fa-lg"></i>
                                                   </a>
                                               </div>
@@ -104,6 +107,9 @@ const ExploreItems = () => {
                                           className="lazy"
                                           src={item.authorImage}
                                           alt=""
+                                          onClick={setSelectedAuthor(
+                                              `${item.authorId}`,
+                                          )}
                                       />
                                       <i className="fa fa-check"></i>
                                   </Link>
@@ -126,20 +132,20 @@ const ExploreItems = () => {
                                           <div className="nft__item_share">
                                               <h4>Share</h4>
                                               <a
-                                                  href=""
+                                                  href="#top"
                                                   target="_blank"
                                                   rel="noreferrer"
                                               >
                                                   <i className="fa fa-facebook fa-lg"></i>
                                               </a>
                                               <a
-                                                  href=""
+                                                  href="#top"
                                                   target="_blank"
                                                   rel="noreferrer"
                                               >
                                                   <i className="fa fa-twitter fa-lg"></i>
                                               </a>
-                                              <a href="">
+                                              <a href="#top">
                                                   <i className="fa fa-envelope fa-lg"></i>
                                               </a>
                                           </div>
@@ -150,6 +156,9 @@ const ExploreItems = () => {
                                           src={item.nftImage}
                                           className="lazy nft__item_preview"
                                           alt=""
+                                          onClick={setSelectedItemId(
+                                              item.nftId,
+                                          )}
                                       />
                                   </Link>
                               </div>
