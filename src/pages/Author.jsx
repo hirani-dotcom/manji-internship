@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
-import { Link } from "react-router-dom";
 import { DataContext } from "../components/context/DataContext";
 import Skeleton from "../components/UI/Skeleton";
 
