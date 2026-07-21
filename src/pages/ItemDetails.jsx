@@ -28,7 +28,9 @@ const ItemDetails = () => {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="item_info">
-                                        <h2 className="skeleton"></h2>
+                                        <h2 className="skeleton">
+                                            Fetching Item Details
+                                        </h2>
                                         <div className="item_info_counts">
                                             <div className="item_info_views">
                                                 <i className="skeleton fa fa-eye"></i>
