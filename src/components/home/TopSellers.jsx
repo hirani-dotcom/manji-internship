@@ -40,7 +40,7 @@ const TopSellers = () => {
           <div className="col-md-12">
             <ol className="author_list">
               {topSellers.map((item) => (
-                <li key={item.id}>
+                <li div da key={item.id}>
                   <div className="author_list_pp">
                     <Link to={`/author/${item.authorId}`}>
                       <img className="lazy pp-author"
