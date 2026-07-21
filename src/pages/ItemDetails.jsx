@@ -2,15 +2,80 @@ import React, { useEffect, useContext } from "react";
 import EthImage from "../images/ethereum.svg";
 import { Link } from "react-router-dom";
 import { DataContext } from "../components/context/DataContext";
-import Skeleton from "../components/UI/Skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import "../css/styles/skeleton.css";
 
 const ItemDetails = () => {
+    const { itemDetail, setSelectedAuthor, loading } = useContext(DataContext);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
-    const { itemDetail, loading } = useContext(DataContext);
+    // Show skeleton while loading (including first load after refresh)
+    if (loading) {
+        return (
+            <div id="wrapper">
+                <div className="no-bottom no-top" id="content">
+                    <div id="top"></div>
+                    <section aria-label="section" className="mt90 sm-mt-0">
+                        <div className="container">
+                            <div className="row">
+                                <div className="skeleton col-md-6 text-center">
+                                    <img
+                                        className="img-fluid img-rounded mb-sm-30 nft-image"
+                                        alt=""
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="item_info">
+                                        <h2 className="skeleton"></h2>
+                                        <div className="item_info_counts">
+                                            <div className="item_info_views">
+                                                <i className="skeleton fa fa-eye"></i>
+                                            </div>
+                                            <div className="item_info_like">
+                                                <i className="skeleton fa fa-heart"></i>
+                                            </div>
+                                        </div>
+                                        <p className="skeleton">
+                                            <br></br>
+                                        </p>
+                                        <div className="d-flex flex-row">
+                                            <div className="mr40">
+                                                <h6>Owner</h6>
+                                                <div className="item_author">
+                                                    <div className="skeleton author_list_info">
+                                                        <i className="skeleton fa fa-check"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div></div>
+                                        </div>
+                                        <div className="d-flex flex-row">
+                                            <div className="mr40">
+                                                <h6>Creator</h6>
+                                                <div className="item_author">
+                                                    <div className="skeleton author_list_info">
+                                                        <i className="skeleton fa fa-check"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="spacer-40"></div>
+                                        <h6>Price</h6>
+                                        <div className="nft-item-price">
+                                            <img src={EthImage} alt="" />
+                                            <span className="skeleton"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        );
+    }
 
     if (!itemDetail) return <p>Item not found.</p>;
 
@@ -22,69 +87,63 @@ const ItemDetails = () => {
                     <div className="container">
                         <div className="row">
                             <div className="col-md-6 text-center">
-                                <Skeleton loading={loading}>
-                                    <img
-                                        src={itemDetail.nftImage}
-                                        className="img-fluid img-rounded mb-sm-30 nft-image"
-                                        alt=""
-                                    />
-                                </Skeleton>
+                                <img
+                                    src={itemDetail.nftImage}
+                                    className="img-fluid img-rounded mb-sm-30 nft-image"
+                                    alt=""
+                                />
                             </div>
                             <div className="col-md-6">
                                 <div className="item_info">
-                                    <Skeleton loading={loading}>
-                                        <h2>
-                                            {itemDetail.title} #{itemDetail.tag}
-                                        </h2>
-                                    </Skeleton>
+                                    <h2>
+                                        {itemDetail.title} #{itemDetail.tag}
+                                    </h2>
                                     <div className="item_info_counts">
-                                        <Skeleton loading={loading}>
-                                            <div className="item_info_views">
-                                                <i className="fa fa-eye"></i>
-                                                {itemDetail.views}
-                                            </div>
-                                        </Skeleton>
-                                        <Skeleton loading={loading}>
-                                            <div className="item_info_like">
-                                                <i className="fa fa-heart"></i>
-                                                {itemDetail.likes}
-                                            </div>
-                                        </Skeleton>
+                                        <div className="item_info_views">
+                                            <i className="fa fa-eye"></i>
+                                            {itemDetail.views}
+                                        </div>
+                                        <div className="item_info_like">
+                                            <i className="fa fa-heart"></i>
+                                            {itemDetail.likes}
+                                        </div>
                                     </div>
-                                    <Skeleton loading={loading}>
-                                        <p>{itemDetail.description}</p>
-                                    </Skeleton>
+                                    <p>{itemDetail.description}</p>
                                     <div className="d-flex flex-row">
                                         <div className="mr40">
                                             <h6>Owner</h6>
                                             <div className="item_author">
                                                 <div className="author_list_pp">
-                                                    <Skeleton loading={loading}>
-                                                        <Link
-                                                            to={`/author/${itemDetail.ownerId}`}
-                                                        >
-                                                            <img
-                                                                className="lazy"
-                                                                src={
-                                                                    itemDetail.ownerImage
-                                                                }
-                                                                alt=""
-                                                            />
-                                                            <i className="fa fa-check"></i>
-                                                        </Link>
-                                                    </Skeleton>
-                                                </div>
-                                                <Skeleton loading={loading}>
-                                                    <div className="author_list_info">
-                                                        <Link
-                                                            to={`/author/${itemDetail.ownerId}`}
-                                                        >
-                                                            {
-                                                                itemDetail.ownerName
+                                                    <Link
+                                                        to={`/author/${itemDetail.ownerId}`}
+                                                    >
+                                                        <img
+                                                            className="lazy"
+                                                            src={
+                                                                itemDetail.ownerImage
                                                             }
-                                                        </Link>
-                                                    </div>
-                                                </Skeleton>
+                                                            alt=""
+                                                            onClick={() =>
+                                                                setSelectedAuthor(
+                                                                    itemDetail.ownerId,
+                                                                )
+                                                            }
+                                                        />
+                                                        <i className="fa fa-check"></i>
+                                                    </Link>
+                                                </div>
+                                                <div className="author_list_info">
+                                                    <Link
+                                                        to={`/author/${itemDetail.ownerId}`}
+                                                        onClick={() =>
+                                                            setSelectedAuthor(
+                                                                itemDetail.ownerId,
+                                                            )
+                                                        }
+                                                    >
+                                                        {itemDetail.ownerName}
+                                                    </Link>
+                                                </div>
                                             </div>
                                         </div>
                                         <div></div>
@@ -94,43 +153,46 @@ const ItemDetails = () => {
                                             <h6>Creator</h6>
                                             <div className="item_author">
                                                 <div className="author_list_pp">
-                                                    <Skeleton loading={loading}>
-                                                        <Link
-                                                            to={`/author/${itemDetail.creatorId}`}
-                                                        >
-                                                            <img
-                                                                className="lazy"
-                                                                src={
-                                                                    itemDetail.creatorImage
-                                                                }
-                                                                alt=""
-                                                            />
-                                                            <i className="fa fa-check"></i>
-                                                        </Link>
-                                                    </Skeleton>
+                                                    <Link
+                                                        to={`/author/${itemDetail.creatorId}`}
+                                                    >
+                                                        {" "}
+                                                        <img
+                                                            className="lazy"
+                                                            src={
+                                                                itemDetail.creatorImage
+                                                            }
+                                                            alt=""
+                                                            onClick={() =>
+                                                                setSelectedAuthor(
+                                                                    itemDetail.creatorId,
+                                                                )
+                                                            }
+                                                        />
+                                                        <i className="fa fa-check"></i>
+                                                    </Link>
                                                 </div>
 
                                                 <div className="author_list_info">
-                                                    <Skeleton loading={loading}>
-                                                        <Link
-                                                            to={`/author/${itemDetail.creatorId}`}
-                                                        >
-                                                            {
-                                                                itemDetail.creatorName
-                                                            }
-                                                        </Link>
-                                                    </Skeleton>
+                                                    <Link
+                                                        to={`/author/${itemDetail.creatorId}`}
+                                                        onClick={() =>
+                                                            setSelectedAuthor(
+                                                                itemDetail.creatorId,
+                                                            )
+                                                        }
+                                                    >
+                                                        {itemDetail.creatorName}
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="spacer-40"></div>
                                         <h6>Price</h6>
-                                        <Skeleton loading={loading}>
-                                            <div className="nft-item-price">
-                                                <img src={EthImage} alt="" />
-                                                <span>{itemDetail.price}</span>
-                                            </div>
-                                        </Skeleton>
+                                        <div className="nft-item-price">
+                                            <img src={EthImage} alt="" />
+                                            <span>{itemDetail.price}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

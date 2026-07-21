@@ -8,7 +8,7 @@ export const DataProvider = ({ children }) => {
     const [newItems, setNewItems] = useState([]);
     const [topSellers, setTopSellers] = useState([]);
     const [explore, setExplore] = useState([]);
-    const [itemDetail, setItemDetail] = useState([]);
+    const [itemDetail, setItemDetail] = useState([null]);
     const [selectedItem, setSelectedItem] = useState(null);
     const [author, setAuthor] = useState([]);
     const [selectedAuthor, setSelectedAuthor] = useState(null);

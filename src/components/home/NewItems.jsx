@@ -104,9 +104,7 @@ const NewItems = () => {
                             {Array.from({ length: 4 }).map((_, idx) => (
                                 <div
                                     key={idx}
-                                    className="skeleton skeleton-img nft_wrap"
-                                >
-                                    Collecting the data
+                                    className="skeleton skeleton-img nft_wrap">
                                 </div>
                             ))}
                         </Slider>
