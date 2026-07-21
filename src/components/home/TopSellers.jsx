@@ -25,11 +25,12 @@ const TopSellers = () => {
             <ol className="author_list">
               {new Array(12).fill(0).map((_, index) => (
                 <li key={index}>
-                  <div className="skeleton  author_list_pp">
-                    Loading
+                  <div className="skeleton author_list_pp">
+                    <img className="lazy pp-author" alt=""/>
                   </div>
-                  <div className="skeleton  author_list_info">
-                    
+                  <br></br>
+                  <div className="skeleton author_list_pp">
+                    <i className="fa fa-check"></i>
                   </div>
                 </li>
               ))}
@@ -42,8 +43,7 @@ const TopSellers = () => {
                 <li key={item.id}>
                   <div className="author_list_pp">
                     <Link to={`/author/${item.authorId}`}>
-                      <img
-                        className="lazy pp-author"
+                      <img className="lazy pp-author"
                         src={item.authorImage}
                         alt=""
                         onClick={() =>
