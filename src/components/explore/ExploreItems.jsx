@@ -164,8 +164,11 @@ const ExploreItems = () => {
                                   </Link>
                               </div>
                               <div className="nft__item_info">
-                                  <Link to="/item-details">
-                                      <h4>{item.title}</h4>
+                                  <Link to={`/item-details/${selectedItem}`}>
+                                      <h4
+                                          onClick={() => {
+                                              setSelectedItem(item.nftId);
+                                          }}>{item.title}</h4>
                                   </Link>
                                   <div className="nft__item_price">
                                       {item.price} ETH
